@@ -61,4 +61,9 @@ td{
   padding: 8px;
 
   vertical-align: top;
+  transition: background-color 0.3s ease;
+}
+
+td:hover{
+  background-color: rgb(181, 181, 181);
 }
