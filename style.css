@@ -47,6 +47,10 @@ option{
   font-size: 35px;
 }
 
+.feriado {
+  background-color: red;
+}
+
 th{
   background-color: white;
   height: 60px;

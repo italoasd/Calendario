@@ -1,5 +1,3 @@
-
-
 // Função para criar o calendário
 function criarCalendario(mes, ano) {
   const diasNoMes = new Date(ano, mes + 1, 0).getDate(); // Quantidade de dias no mês
@@ -15,7 +13,9 @@ function criarCalendario(mes, ano) {
           if ((i === 0 && j < primeiroDiaDaSemana) || dia > diasNoMes) {
               html += '<td></td>';
           } else {
-            html += `<td id="dia-${dia}-mes-${mes}" onclick="addTarefa('dia-${dia}-mes-${mes}')"><div>${dia}</div><p></p></td>`;
+            const id = `dia-${dia}-mes-${mes}`;
+            const tarefasSalvas = JSON.parse(localStorage.getItem(id)) || [];
+            html += `<td id="${id}" onclick="exibirModal('${id}')"><div>${dia}</div><p>${tarefasSalvas.join('<br>')}</p></td>`;
               dia++;
           }
       }
@@ -28,7 +28,9 @@ function criarCalendario(mes, ano) {
   var diaAtual = (new Date()).getDate();
   var idDiaAtual = `dia-${diaAtual}-mes-${mesAtual}`;
   var htmlDiaAtual = document.getElementById(idDiaAtual);
+  if (htmlDiaAtual) {
       htmlDiaAtual.style.backgroundColor = '#f650f1b1';
+  }
 }
 
 document.getElementById('select-mes').addEventListener('change', function() {
@@ -41,15 +43,20 @@ const mesAtual = (new Date()).getMonth();
 document.getElementById('select-mes').value = mesAtual;
 criarCalendario(mesAtual, 2024);
 
+// Função para exibir o modal
+function exibirModal(id) {
+  addTarefa(id);
+  const modal = document.getElementById('modal-tarefa');
+  modal.style.display = 'block';
+}
+
 function addTarefa(id) {
-  const Modal = document.getElementById('modal-tarefa');
+  const divDia = document.getElementById(id);
   const divTarefas = document.getElementById('tarefas');
+  const tarefasSalvas = JSON.parse(localStorage.getItem(id)) || [];
 
   // Limpa o conteúdo anterior das tarefas
   divTarefas.innerHTML = '';
-
-  // Obtém as tarefas salvas no localStorage para o dia atual
-  const tarefasSalvas = JSON.parse(localStorage.getItem(id)) || [];
 
   // Exibe as tarefas salvas no modal
   tarefasSalvas.forEach((tarefa, index) => {
@@ -65,6 +72,7 @@ function addTarefa(id) {
         tarefasSalvas[index] = novoTexto;
         localStorage.setItem(id, JSON.stringify(tarefasSalvas));
         addTarefa(id); // Atualiza o modal com as tarefas atualizadas
+        criarCalendario((new Date()).getMonth(), 2024); // Atualiza o calendário
       }
     });
 
@@ -74,6 +82,7 @@ function addTarefa(id) {
       tarefasSalvas.splice(index, 1);
       localStorage.setItem(id, JSON.stringify(tarefasSalvas));
       addTarefa(id); // Atualiza o modal com as tarefas atualizadas
+      criarCalendario((new Date()).getMonth(), 2024); // Atualiza o calendário
     });
 
     tarefaElemento.appendChild(botaoMudar);
@@ -103,6 +112,7 @@ function addTarefa(id) {
     tarefasSalvas.push(novaTarefa);
     localStorage.setItem(id, JSON.stringify(tarefasSalvas));
     addTarefa(id); // Atualiza o modal com as tarefas atualizadas
+    criarCalendario((new Date()).getMonth(), 2024); // Atualiza o calendário
 
     // Limpa o input após adicionar a tarefa
     novaTarefaInput.value = '';
@@ -111,11 +121,7 @@ function addTarefa(id) {
   // Adiciona o input e o botão ao modal
   divTarefas.appendChild(inputTarefa);
   divTarefas.appendChild(botaoAdicionar);
-
-  // Exibe o modal
-  Modal.style.display = 'block';
 }
-
 
 function fecharModal() {
   const modal = document.getElementById('modal-tarefa');
