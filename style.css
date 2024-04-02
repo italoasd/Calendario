@@ -1,11 +1,13 @@
 *{
-  margin: 0;
+  margin: 8px;
+  margin-top: 5px;
   padding: 0;
 
   font-weight: bold;
   font-size: 21px;  
   font-family: "Roboto", sans-serif;
   font-style: normal;
+  border-radius: 15px;
 }
 
 body{
@@ -16,7 +18,7 @@ body{
 }
 
 .container{
-  background-color: rgb(99, 0, 148);
+  background-color: rgb(146, 5, 216);
   border-radius: 20px;
   padding: 60px;
 }
@@ -66,6 +68,7 @@ td{
 
   vertical-align: top;
   transition: background-color 0.3s ease;
+  font-size: 15px;
 }
 
 td:hover{
@@ -88,9 +91,10 @@ td:hover{
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto; 
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  padding: 80px;
+  border: 5px solid #888;
+  width: 55%;
+  border-radius: 30px;
 }
 
 .close {
@@ -105,4 +109,22 @@ td:hover{
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.modal-content input[type="text"] {
+  width: calc(100% - 80px); 
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modal-content button {
+  background-color: rgb(146, 5, 216); 
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px; 
 }
